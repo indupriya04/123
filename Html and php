@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>login</title>
+</head>
+
+<body align="center" style="color:royalblue">
+    <form action="login.php" method="POST">
+        <h4>username</h4>
+        <input type="text" name="username">
+        <h4>password</h4>
+        <input type="number" name="password">
+        <h4>contact</h4>
+        <input type="number" name="contact">
+        <h4>gender</h4>
+        <input type="radio" id="gender" name="gender" value="male">male
+        <input type="radio" id="gender" name="gender" value="female">female<br><br>
+        <select name="city">
+            <optgroup label="tel">
+        <option value="khammam">khammam</option>
+        <option value="warangal">warangal</option>
+         </optgroup>
+         <optgroup label="andhra">
+        <option value="vizag">vizag</option>
+        </optgroup>
+        </select><br><br>
+        <input type="submit" name="submit">
+    </form>
+</body>
+
+</html>
+
+
+
+
+
+<?php
+if($_SERVER["REQUEST_METHOD"] =="POST"){
+    $dbservername="localhost";
+    $dbusername="root";
+    $dbpassword="";
+    $dbname="me";
+    $conn=new mysqli($dbservername,$dbusername,$dbpassword,$dbname);
+    if($conn->connect_error){
+        die("error to connet".$conn->connect_error);
+    }
+    $name=$_POST["username"];
+    $password=$_POST["password"];
+    $contact=$_POST["contact"];
+    $gender=$_POST["gender"];
+    $city=$_POST["city"];
+    $insert_query="INSERT INTO login(Name,Password,Contact,Gender,City) VALUES ('$name','$password','$contact','$gender','$city')";
+    if($conn->query($insert_query) == TRUE){
+        echo "registration successful";
+    }
+    else{
+        echo "error".$insert_query. "<br>" .$conn->error;
+    }
+$conn->close();
+}
+?>
